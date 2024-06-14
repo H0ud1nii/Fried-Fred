@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq2icw484p53m"]
+
+[ext_resource type="Script" path="res://FryBlaster.gd" id="1_qbaxx"]
+[ext_resource type="Texture2D" uid="uid://cou55dngcodx5" path="res://assets/weapons/Fry_Blaster.png" id="2_ra6no"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rakxd"]
+radius = 119.151
+
+[node name="FryBlaster" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_qbaxx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rakxd")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="Body" type="Sprite2D" parent="WeaponPivot"]
+rotation = -0.698132
+scale = Vector2(2, 2)
+texture = ExtResource("2_ra6no")
+
+[node name="ShootingPoint" type="Marker2D" parent="WeaponPivot/Body"]
+unique_name_in_owner = true
+position = Vector2(5.23905, 3.09068)
+rotation = 0.698132
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

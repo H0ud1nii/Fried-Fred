@@ -9,20 +9,15 @@ colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
 gradient = SubResource("Gradient_efxh2")
 width = 50
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_33jsh"]
-radius = 14.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4b0s3"]
+size = Vector2(28, 48)
 
 [node name="KetchupZombie" type="CharacterBody2D" groups=["enemy"]]
-collision_layer = 2
-collision_mask = 135
 script = ExtResource("1_kkpn1")
 
-[node name="Body" type="Node2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="Body"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.56, 48)
 texture = SubResource("GradientTexture1D_jb332")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 21)
-shape = SubResource("CircleShape2D_33jsh")
+shape = SubResource("RectangleShape2D_4b0s3")

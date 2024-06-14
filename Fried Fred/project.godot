@@ -15,6 +15,10 @@ run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+WeaponTypes="*res://WeaponTypes.gd"
+
 [display]
 
 window/size/viewport_width=720
@@ -61,6 +65,7 @@ ui_down={
 
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemy"
+2d_physics/layer_3="Bullet"
 
 [rendering]
 

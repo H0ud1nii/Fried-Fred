@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgbace2lq52ga"]
+
+[sub_resource type="Gradient" id="Gradient_ljrpj"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5h2lw"]
+gradient = SubResource("Gradient_ljrpj")
+width = 50
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3uc42"]
+size = Vector2(28, 48)
+
+[node name="KetchupZombie" type="Node2D" groups=["enemy"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.56, 48)
+texture = SubResource("GradientTexture1D_5h2lw")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3uc42")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

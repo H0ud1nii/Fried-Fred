@@ -1,57 +1,38 @@
-extends Node2D
+extends CharacterBody2D
 
 var speed = 200
 var health = 100
+var hud
 
+func _physics_process(delta):
+	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	velocity = direction * speed
+	move_and_slide()
+	
+	if velocity.length() > 0:
+		get_node("Body").play_walk_animation()
+	else:
+		get_node("Body").play_idle_animation()
+		
+	if direction.x != 0:
+		$Body/Sprite2D.flip_h = direction.x < 0
 
 func _ready():
-	# Play the idle animation
-	$AnimationPlayer.play("Idle_Stand")
-	
 	# Set the player's initial position to the center of the screen
 	position = Vector2(get_viewport_rect().size.x / 2, get_viewport_rect().size.y / 2)
-
-func _process(delta):
-	var velocity = Vector2.ZERO
-	var is_moving = false
-
-	# Collect input for horizontal movement
-	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
-		$Sprite2D.flip_h = false
-		is_moving = true
-	if Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
-		$Sprite2D.flip_h = true
-		is_moving = true
-
-	# Collect input for vertical movement
-	if Input.is_action_pressed("ui_down"):
-		velocity.y += 1
-		is_moving = true
-	if Input.is_action_pressed("ui_up"):
-		velocity.y -= 1
-		is_moving = true
-
-	# Normalize the velocity vector to ensure consistent speed in all directions
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		position += velocity * delta
-
-		# Play the appropriate animation based on movement
-		if is_moving:
-			$AnimationPlayer.play("Walk")
-		else:
-			$AnimationPlayer.play("Idle_Stand")
-	else:
-		$AnimationPlayer.play("Idle_Stand")
+	# Get the HUD reference
+	hud = get_node("/root/Main/Game/HUD")
 
 func take_damage(amount):
 	health -= amount
 	print(health)
 	if health <= 0:
 		die()
-		
+	hud.update_hp_bar(health)  # Update the HP bar in the HUD
 
 func die():
 	queue_free()  # Temporary placeholder, implement game over logic later
+
+
+func _on_area_2d_body_entered(body):
+	pass # Replace with function body.

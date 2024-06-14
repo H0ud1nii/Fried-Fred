@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqlkbh4s0bvsn"]
+
+[ext_resource type="Texture2D" uid="uid://bof1qm87bmhie" path="res://assets/ui/lifebar_bg.png" id="1_8kyok"]
+[ext_resource type="Script" path="res://hud.gd" id="1_66pb0"]
+[ext_resource type="Texture2D" uid="uid://btaix8q56gfdw" path="res://assets/ui/lifebar_fill.png" id="2_irus4"]
+
+[node name="HUD" type="Node2D"]
+script = ExtResource("1_66pb0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2(10, 10)
+transform = Transform2D(10, 0, 0, 10, 0, 0)
+
+[node name="HPBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 3.0
+offset_top = -11.8
+offset_right = 35.0
+offset_bottom = 20.2
+value = 100.0
+texture_under = ExtResource("1_8kyok")
+texture_progress = ExtResource("2_irus4")

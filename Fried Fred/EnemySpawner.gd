@@ -2,6 +2,7 @@ extends Node2D
 
 # Add the signals
 signal enemy_spawned
+signal zombie_died
 
 # Declare variables
 @export var enemy_scene_path : String = "res://KetchupZombie.tscn"
@@ -68,9 +69,20 @@ func reset_spawner() -> void:
 func get_enemies_spawned() -> int:
 	return enemies_spawned
 
+func _on_zombie_died(zombie_instance: Node2D) -> void:
+	print("Zombie died")
+	if zombie_instance.position in enemy_positions:
+		enemy_positions.erase(zombie_instance.position)
+	enemies_spawned -= 1
+	print("Enemies left: ", enemies_spawned)
+
+
 # Initialization code
 func _ready() -> void:
 	print("Spawner ready")
 	add_child(spawn_timer)
 	enemy_scene = load(enemy_scene_path)
 	start_spawner()
+	connect("zombie_died", Callable(self, "on_zombie_died"))
+	
+  
