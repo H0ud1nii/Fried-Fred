@@ -2,6 +2,14 @@ extends Area2D
 
 var travelled_distance = 0
 
+@export var type: int = WeaponTypes.WeaponType.FRY_BLASTER
+@export var rarity: int = WeaponTypes.WeaponRarity.COMMON
+var damage: int
+
+func _ready():
+	var attributes = WeaponTypes.weapon_attributes[type][rarity]
+	damage = attributes["damage"]
+
 func _physics_process(delta):
 	const SPEED = 1000
 	const RANGE = 800
@@ -13,6 +21,11 @@ func _physics_process(delta):
 	if travelled_distance > RANGE:
 		queue_free()
 
+
+func _on_body_entered(body):
+	queue_free()
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
 #@export var speed = 100
 #@export var direction = Vector2.ZERO
 #@export var damage = 10
@@ -57,9 +70,3 @@ func _physics_process(delta):
 		#queue_free()
 	#else:
 		#print("Bullet missed")
-
-
-func _on_body_entered(body):
-	queue_free()
-	if body.has_method("take_damage"):
-		body.take_damage()

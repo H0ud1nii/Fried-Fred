@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://ua22x1rri8lu"]
+
+[ext_resource type="Script" path="res://Menu.gd" id="1_uji64"]
+[ext_resource type="Texture2D" uid="uid://ddheywi3x8k8u" path="res://assets/ui/menu_bg.png" id="2_rjy0u"]
+[ext_resource type="FontFile" uid="uid://cbh6rgai4f1ka" path="res://Karma Future.otf" id="3_bu0fb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kcmof"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_txcv0"]
+
+[node name="Menu" type="Control"]
+layout_direction = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 360.0
+offset_top = 640.0
+offset_right = 360.0
+offset_bottom = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_uji64")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_rjy0u")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -54.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 240
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 240
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.831373, 0, 0.188235, 1)
+theme_override_colors/font_pressed_color = Color(0.831373, 0, 0.188235, 0.588235)
+theme_override_colors/font_outline_color = Color(0.0117647, 0.00784314, 0.117647, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_bu0fb")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kcmof")
+text = "Play"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0, 0.180392, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0, 0.180392, 0.588235)
+theme_override_colors/font_outline_color = Color(0.0117647, 0.00784314, 0.105882, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_bu0fb")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxEmpty_txcv0")
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

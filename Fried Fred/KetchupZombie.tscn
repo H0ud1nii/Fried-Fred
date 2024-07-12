@@ -1,28 +1,70 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgbace2lq52ga"]
+[gd_scene load_steps=8 format=3 uid="uid://bgbace2lq52ga"]
 
 [ext_resource type="Script" path="res://KetchupZombie.gd" id="1_kkpn1"]
+[ext_resource type="Script" path="res://KetchupZombieBody.gd" id="2_wsbjm"]
+[ext_resource type="Texture2D" uid="uid://b54l1qen20ag" path="res://assets/Zombie Ketshup-Sheet.png" id="3_vq262"]
 
-[sub_resource type="Gradient" id="Gradient_efxh2"]
-colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
+[sub_resource type="Animation" id="Animation_ac4x4"]
+resource_name = "Walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_jb332"]
-gradient = SubResource("Gradient_efxh2")
-width = 50
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ymlqe"]
+_data = {
+"Walk": SubResource("Animation_ac4x4")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_33jsh"]
-radius = 14.0
+radius = 15.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2jw"]
+size = Vector2(25, 60)
 
 [node name="KetchupZombie" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 2
 collision_mask = 135
 script = ExtResource("1_kkpn1")
 
-[node name="Body" type="Node2D" parent="."]
+[node name="KetchupZombieBody" type="Node2D" parent="."]
+script = ExtResource("2_wsbjm")
 
-[node name="Sprite2D" type="Sprite2D" parent="Body"]
-scale = Vector2(0.56, 48)
-texture = SubResource("GradientTexture1D_jb332")
+[node name="Sprite2D" type="Sprite2D" parent="KetchupZombieBody"]
+position = Vector2(-3.8147e-06, 3.8147e-06)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_vq262")
+hframes = 4
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="KetchupZombieBody"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_ymlqe")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 21)
+position = Vector2(-1, 6)
 shape = SubResource("CircleShape2D_33jsh")
+
+[node name="AttackArea" type="Area2D" parent="."]
+position = Vector2(1, 2)
+collision_layer = 2048
+collision_mask = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-1.5, -3)
+shape = SubResource("RectangleShape2D_mn2jw")
+debug_color = Color(0.947585, 0.173328, 0.387786, 0.42)
+
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]

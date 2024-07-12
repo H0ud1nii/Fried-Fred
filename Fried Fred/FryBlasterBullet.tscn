@@ -34,6 +34,7 @@ collision_mask = 2
 script = ExtResource("1_gfxjb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_uya1c")
 hframes = 4
 frame = 1
@@ -44,6 +45,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_cnpda")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

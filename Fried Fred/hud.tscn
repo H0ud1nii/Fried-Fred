@@ -1,21 +1,132 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqlkbh4s0bvsn"]
+[gd_scene load_steps=8 format=3 uid="uid://dqlkbh4s0bvsn"]
 
 [ext_resource type="Texture2D" uid="uid://bof1qm87bmhie" path="res://assets/ui/lifebar_bg.png" id="1_8kyok"]
 [ext_resource type="Script" path="res://hud.gd" id="1_66pb0"]
 [ext_resource type="Texture2D" uid="uid://btaix8q56gfdw" path="res://assets/ui/lifebar_fill.png" id="2_irus4"]
+[ext_resource type="Texture2D" uid="uid://dmwg5swp23aqo" path="res://assets/ui/xpbar_bg.png" id="4_bymxx"]
+[ext_resource type="Texture2D" uid="uid://covomou0pmbqr" path="res://assets/ui/xpbar_fill.png" id="5_fhxp2"]
+[ext_resource type="FontFile" uid="uid://cdf67btmy7j6o" path="res://ThaleahFat.ttf" id="6_i6rg4"]
+[ext_resource type="Texture2D" uid="uid://cnksnu5volajk" path="res://assets/ui/coinbar_bg.png" id="7_wvxol"]
 
-[node name="HUD" type="Node2D"]
+[node name="HUD" type="Node2D" groups=["HUD"]]
 script = ExtResource("1_66pb0")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-scale = Vector2(10, 10)
-transform = Transform2D(10, 0, 0, 10, 0, 0)
+[node name="HPCanvas" type="CanvasLayer" parent="."]
 
-[node name="HPBar" type="TextureProgressBar" parent="CanvasLayer"]
-offset_left = 3.0
-offset_top = -11.8
-offset_right = 35.0
-offset_bottom = 20.2
+[node name="HPBar" type="TextureProgressBar" parent="HPCanvas"]
+offset_top = 10.0
+offset_right = 320.0
+offset_bottom = 70.0
 value = 100.0
 texture_under = ExtResource("1_8kyok")
 texture_progress = ExtResource("2_irus4")
+
+[node name="XPCanvas" type="CanvasLayer" parent="."]
+
+[node name="XPBar" type="TextureProgressBar" parent="XPCanvas"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -330.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 70.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_under = ExtResource("4_bymxx")
+texture_progress = ExtResource("5_fhxp2")
+
+[node name="lbl_level" type="Label" parent="XPCanvas/XPBar"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = -48.0
+offset_right = 310.0
+offset_bottom = -10.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.419608, 0.172549, 0.180392, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_i6rg4")
+theme_override_font_sizes/font_size = 30
+text = "Level: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="XPCanvas"]
+offset_left = 580.0
+offset_top = 80.0
+offset_right = 710.0
+offset_bottom = 140.0
+texture = ExtResource("7_wvxol")
+
+[node name="lbl_coin" type="Label" parent="XPCanvas/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.277
+anchor_top = 0.2
+anchor_right = 0.931
+anchor_bottom = 0.833
+offset_left = 1.99
+offset_right = -0.0300064
+offset_bottom = 0.0199966
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.854902, 0.160784, 0.109804, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_i6rg4")
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerCanvas" type="CanvasLayer" parent="."]
+
+[node name="lbl_time" type="Label" parent="TimerCanvas"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.5
+offset_top = 75.0
+offset_right = 41.5
+offset_bottom = 112.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_i6rg4")
+theme_override_font_sizes/font_size = 40
+text = "01:30"
+
+[node name="ShopCanvas" type="CanvasLayer" parent="."]
+
+[node name="Shop" type="Panel" parent="ShopCanvas"]
+process_mode = 2
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lbl-shop" type="Label" parent="ShopCanvas/Shop"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("6_i6rg4")
+theme_override_font_sizes/font_size = 70
+text = "Shop"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOptions" type="VBoxContainer" parent="ShopCanvas/Shop"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 200.0
+offset_right = 710.0
+offset_bottom = 600.0

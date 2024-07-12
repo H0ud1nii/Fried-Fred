@@ -4,23 +4,36 @@ extends Area2D
 var bullet_scene = preload("res://assets/bullets/FryBlasterBullet.png")
 
 # Define exported variables with type hints
-@export var damage: int = 10
-@export var fire_rate: float = 2.0
+#@export var damage: int = 10
+#@export var fire_rate: float = 2.0
+@export var type: int = WeaponTypes.WeaponType.FRY_BLASTER
 @export var rarity: int = WeaponTypes.WeaponRarity.COMMON
+var damage: int
+var fire_rate: float
+var range: int
+
 
 # Other variables
 var time_since_last_shot: float = 0.0
 var can_shoot: bool = true
 var default_rotation: float = 0.0
-
+@onready var gun_sprite: Sprite2D = $WeaponPivot/Body
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var circle_shape: CircleShape2D = collision_shape.shape
 #func set_weapon_attributes() -> void:
 	#var weapon_types_instance = WeaponTypes.new()  # Create an instance of the WeaponTypes script
 	#var attributes = weapon_types_instance.weapon_attributes[WeaponTypes.WeaponType.FRY_BLASTER][rarity]
 	#damage = attributes["damage"]
 	#fire_rate = attributes["fire_rate"]
 
-#func _ready():
+func _ready():
 	#set_weapon_attributes()
+	var attributes = WeaponTypes.weapon_attributes[type][rarity]
+	damage = attributes["damage"]
+	fire_rate = attributes["fire_rate"]
+	range = attributes["range"]
+	circle_shape.radius = range
+	gun_sprite.flip_v = false
 
 func _physics_process(delta):
 	var enemies_in_range = get_overlapping_bodies()
@@ -45,6 +58,7 @@ func shoot():
 		new_bullet.global_position = %ShootingPoint.global_position
 		new_bullet.global_rotation = %ShootingPoint.global_rotation
 		%ShootingPoint.add_child(new_bullet)
+		$AudioStreamPlayer.play()
 	
 	
 

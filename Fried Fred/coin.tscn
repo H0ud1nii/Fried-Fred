@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvh6ayvgby4ub"]
+
+[ext_resource type="Texture2D" uid="uid://d31arrw3sb8ev" path="res://assets/Coin.png" id="1_3rej6"]
+[ext_resource type="Script" path="res://coin.gd" id="1_oxygn"]
+[ext_resource type="AudioStream" uid="uid://dhtgb6utfmffl" path="res://assets/audio/crips_crunch.wav" id="3_akkro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_um748"]
+
+[node name="coin" type="Area2D" groups=["loot"]]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_oxygn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_3rej6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_um748")
+
+[node name="sound_collected" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_akkro")
+
+[connection signal="finished" from="sound_collected" to="." method="_on_sound_collected_finished"]

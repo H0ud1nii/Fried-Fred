@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://glsslgoa0qxe"]
+
+[ext_resource type="Texture2D" uid="uid://cou55dngcodx5" path="res://assets/weapons/Fry_Blaster.png" id="1_3db7k"]
+[ext_resource type="Script" path="res://item_option.gd" id="1_micxu"]
+[ext_resource type="FontFile" uid="uid://cdf67btmy7j6o" path="res://ThaleahFat.ttf" id="2_t3vwk"]
+
+[node name="ItemOption" type="ColorRect"]
+custom_minimum_size = Vector2(650, 300)
+anchors_preset = -1
+anchor_right = 0.903
+anchor_bottom = 0.234
+offset_right = -0.160034
+offset_bottom = 0.47998
+color = Color(0.54902, 0.54902, 0.54902, 1)
+script = ExtResource("1_micxu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 170.0
+offset_bottom = 170.0
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+texture = ExtResource("1_3db7k")
+
+[node name="lbl_name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 7.0
+offset_right = 335.0
+offset_bottom = 62.0
+theme_override_fonts/font = ExtResource("2_t3vwk")
+theme_override_font_sizes/font_size = 60
+text = "Name"
+
+[node name="lbl-description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 181.0
+offset_right = 195.0
+offset_bottom = 205.0
+theme_override_fonts/font = ExtResource("2_t3vwk")
+theme_override_font_sizes/font_size = 25
+text = "Item description"
+
+[node name="lbl-rarity" type="Label" parent="."]
+layout_mode = 0
+offset_left = 545.0
+offset_top = 21.0
+offset_right = 622.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("2_t3vwk")
+theme_override_font_sizes/font_size = 30
+text = "Rarity"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

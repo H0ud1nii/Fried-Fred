@@ -1,9 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://coqo77ibej4i3"]
+[gd_scene load_steps=11 format=3 uid="uid://coqo77ibej4i3"]
 
+[ext_resource type="Script" path="res://Game.gd" id="1_2ddjn"]
 [ext_resource type="Script" path="res://EnemySpawner.gd" id="1_cuy8f"]
 [ext_resource type="PackedScene" uid="uid://cerqj7if18xbe" path="res://Player.tscn" id="1_hdsfe"]
 [ext_resource type="PackedScene" uid="uid://dqlkbh4s0bvsn" path="res://hud.tscn" id="3_jgcqv"]
 [ext_resource type="Texture2D" uid="uid://w35aq4qh3m75" path="res://assets/ui/kitchen16_tan.png" id="4_kyoxt"]
+[ext_resource type="Texture2D" uid="uid://bclf5ii83clfu" path="res://assets/ui/You Win.png" id="6_br3yd"]
+[ext_resource type="Texture2D" uid="uid://b7ymcgh6a4uaa" path="res://assets/ui/Game Over.png" id="7_4f8w2"]
+
+[sub_resource type="Curve2D" id="Curve2D_nihbo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -386.05, 21, 0, 0, 0, 0, -90.8361, 25, 0, 0, 0, 0, -97.8175, -37, 0, 0, 0, 0, 810.764, -40, 0, 0, 0, 0, 776.855, 29, 0, 0, 0, 0, 1073.07, 33, 0, 0, 0, 0, 1069.08, 1154, 0, 0, 0, 0, 801.788, 1144, 0, 0, 0, 0, 793.81, 1278, 0, 0, 0, 0, -97.8175, 1278, 0, 0, 0, 0, -97.8175, 1159, 0, 0, 0, 0, -379.069, 1159, 0, 0, 0, 0, -386.05, 21, 0, 0, 0, 0, -386.05, 23)
+}
+point_count = 14
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ipqeu"]
 texture = ExtResource("4_kyoxt")
@@ -594,11 +603,23 @@ texture = ExtResource("4_kyoxt")
 sources/0 = SubResource("TileSetAtlasSource_ipqeu")
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_2ddjn")
 
 [node name="Player" parent="." instance=ExtResource("1_hdsfe")]
 
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(1.07782, -3.8147e-06)
+scale = Vector2(1.00266, 1)
+curve = SubResource("Curve2D_nihbo")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+unique_name_in_owner = true
+position = Vector2(-386.05, 21)
+rotation = 0.0135487
+
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("1_cuy8f")
+max_enemies = 20
 
 [node name="HUD" parent="." instance=ExtResource("3_jgcqv")]
 
@@ -619,6 +640,7 @@ position = Vector2(442, -79)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 128
+collision_mask = 3
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(0, 26)
@@ -634,8 +656,8 @@ position = Vector2(-1, 45)
 polygon = PackedVector2Array(-123, 1297, 814, 1299, -124, 1307)
 
 [node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(3, -1325)
-polygon = PackedVector2Array(-123, 1297, 814, 1299, -124, 1307)
+position = Vector2(3, -1343)
+polygon = PackedVector2Array(-123, 1297, 471, 1302, 814, 1299, 407.804, 1302.46, -124, 1307)
 
 [node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(890, 124)
@@ -655,3 +677,76 @@ polygon = PackedVector2Array(-415, 6, -112, 10, -112, -105)
 position = Vector2(712, -16)
 scale = Vector2(-1.01598, 1.26644)
 polygon = PackedVector2Array(-415, 6, -112, 10, -112, -105)
+
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 40.0
+autostart = true
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="EndGameTimer" type="Timer" parent="."]
+wait_time = 180.0
+autostart = true
+
+[node name="YouWon" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="YouWon"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.817362, 0.502352, 0.0541636, 0.529412)
+
+[node name="YouWonScreen" type="TextureRect" parent="YouWon/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_br3yd")
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.207843, 0.290196, 0.529412)
+
+[node name="GameOverYouWonScreen" type="TextureRect" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_4f8w2")
+
+[node name="loot" type="Node2D" parent="." groups=["loot"]]
+
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="EndGameTimer" to="." method="_on_end_game_timer_timeout"]
