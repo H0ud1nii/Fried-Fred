@@ -679,7 +679,7 @@ scale = Vector2(-1.01598, 1.26644)
 polygon = PackedVector2Array(-415, 6, -112, 10, -112, -105)
 
 [node name="WaveTimer" type="Timer" parent="."]
-wait_time = 40.0
+wait_time = 5.0
 autostart = true
 
 [node name="SpawnTimer" type="Timer" parent="."]

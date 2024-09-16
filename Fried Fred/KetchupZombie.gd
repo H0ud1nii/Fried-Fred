@@ -45,11 +45,19 @@ func take_damage(damage):
 	health -= damage
 	if health <= 0:
 		die()
-		
+
+#func enemy_reset():
+	#ketchup_zombie_died.emit()
+	#queue_free()
+
+
 func die():
 	ketchup_zombie_died.emit()
 	var new_coin = coin.instantiate()
 	new_coin.global_position = global_position
 	new_coin.experience = experience
-	loot_base.call_deferred("add_child", new_coin)
+	if loot_base:
+		loot_base.call_deferred("add_child", new_coin)
+	else:
+		print("Loot base is null when trying to add new coin.")
 	queue_free()
