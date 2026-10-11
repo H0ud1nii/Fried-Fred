@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqlkbh4s0bvsn"]
+[gd_scene load_steps=12 format=3 uid="uid://dqlkbh4s0bvsn"]
 
 [ext_resource type="Texture2D" uid="uid://bof1qm87bmhie" path="res://assets/ui/lifebar_bg.png" id="1_8kyok"]
 [ext_resource type="Script" path="res://hud.gd" id="1_66pb0"]
@@ -7,6 +7,20 @@
 [ext_resource type="Texture2D" uid="uid://covomou0pmbqr" path="res://assets/ui/xpbar_fill.png" id="5_fhxp2"]
 [ext_resource type="FontFile" uid="uid://cdf67btmy7j6o" path="res://ThaleahFat.ttf" id="6_i6rg4"]
 [ext_resource type="Texture2D" uid="uid://cnksnu5volajk" path="res://assets/ui/coinbar_bg.png" id="7_wvxol"]
+[ext_resource type="Texture2D" uid="uid://cou55dngcodx5" path="res://assets/weapons/Fry_Blaster.png" id="8_fryicon"]
+[ext_resource type="Texture2D" uid="uid://2t34sx2d41bk" path="res://assets/weapons/Mustard_Machine_Gun.png" id="9_mustardicon"]
+
+[sub_resource type="Gradient" id="Gradient_dmgflash"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.8, 0, 0, 0, 0.8, 0, 0, 0.6)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dmgflash"]
+gradient = SubResource("Gradient_dmgflash")
+width = 720
+height = 1280
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
 
 [node name="HUD" type="Node2D" groups=["HUD"]]
 script = ExtResource("1_66pb0")
@@ -83,6 +97,171 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PauseCanvas" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="PauseButton" type="Button" parent="PauseCanvas"]
+offset_left = 10.0
+offset_top = 80.0
+offset_right = 110.0
+offset_bottom = 120.0
+text = "Pause"
+
+[node name="DamageFlashCanvas" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="DamageFlash" type="TextureRect" parent="DamageFlashCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_dmgflash")
+modulate = Color(1, 1, 1, 0)
+
+[node name="WeaponSlotsCanvas" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 5
+
+[node name="WeaponSlotBG1" type="ColorRect" parent="WeaponSlotsCanvas"]
+offset_left = 65.0
+offset_top = 1150.0
+offset_right = 155.0
+offset_bottom = 1240.0
+color = Color(0.2, 0.2, 0.2, 0.5)
+
+[node name="WeaponSlotIcon1" type="TextureRect" parent="WeaponSlotsCanvas/WeaponSlotBG1"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 80.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponSlotUpgrade1" type="Button" parent="WeaponSlotsCanvas/WeaponSlotBG1"]
+offset_left = 4.0
+offset_top = 74.0
+offset_right = 86.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 12
+text = "Fuse"
+
+[node name="WeaponSlotBG2" type="ColorRect" parent="WeaponSlotsCanvas"]
+offset_left = 165.0
+offset_top = 1150.0
+offset_right = 255.0
+offset_bottom = 1240.0
+color = Color(0.2, 0.2, 0.2, 0.5)
+
+[node name="WeaponSlotIcon2" type="TextureRect" parent="WeaponSlotsCanvas/WeaponSlotBG2"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 80.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponSlotUpgrade2" type="Button" parent="WeaponSlotsCanvas/WeaponSlotBG2"]
+offset_left = 4.0
+offset_top = 74.0
+offset_right = 86.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 12
+text = "Fuse"
+
+[node name="WeaponSlotBG3" type="ColorRect" parent="WeaponSlotsCanvas"]
+offset_left = 265.0
+offset_top = 1150.0
+offset_right = 355.0
+offset_bottom = 1240.0
+color = Color(0.2, 0.2, 0.2, 0.5)
+
+[node name="WeaponSlotIcon3" type="TextureRect" parent="WeaponSlotsCanvas/WeaponSlotBG3"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 80.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponSlotUpgrade3" type="Button" parent="WeaponSlotsCanvas/WeaponSlotBG3"]
+offset_left = 4.0
+offset_top = 74.0
+offset_right = 86.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 12
+text = "Fuse"
+
+[node name="WeaponSlotBG4" type="ColorRect" parent="WeaponSlotsCanvas"]
+offset_left = 365.0
+offset_top = 1150.0
+offset_right = 455.0
+offset_bottom = 1240.0
+color = Color(0.2, 0.2, 0.2, 0.5)
+
+[node name="WeaponSlotIcon4" type="TextureRect" parent="WeaponSlotsCanvas/WeaponSlotBG4"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 80.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponSlotUpgrade4" type="Button" parent="WeaponSlotsCanvas/WeaponSlotBG4"]
+offset_left = 4.0
+offset_top = 74.0
+offset_right = 86.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 12
+text = "Fuse"
+
+[node name="WeaponSlotBG5" type="ColorRect" parent="WeaponSlotsCanvas"]
+offset_left = 465.0
+offset_top = 1150.0
+offset_right = 555.0
+offset_bottom = 1240.0
+color = Color(0.2, 0.2, 0.2, 0.5)
+
+[node name="WeaponSlotIcon5" type="TextureRect" parent="WeaponSlotsCanvas/WeaponSlotBG5"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 80.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponSlotUpgrade5" type="Button" parent="WeaponSlotsCanvas/WeaponSlotBG5"]
+offset_left = 4.0
+offset_top = 74.0
+offset_right = 86.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 12
+text = "Fuse"
+
+[node name="WeaponSlotBG6" type="ColorRect" parent="WeaponSlotsCanvas"]
+offset_left = 565.0
+offset_top = 1150.0
+offset_right = 655.0
+offset_bottom = 1240.0
+color = Color(0.2, 0.2, 0.2, 0.5)
+
+[node name="WeaponSlotIcon6" type="TextureRect" parent="WeaponSlotsCanvas/WeaponSlotBG6"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 80.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WeaponSlotUpgrade6" type="Button" parent="WeaponSlotsCanvas/WeaponSlotBG6"]
+offset_left = 4.0
+offset_top = 74.0
+offset_right = 86.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 12
+text = "Fuse"
+
 [node name="TimerCanvas" type="CanvasLayer" parent="."]
 
 [node name="lbl_time" type="Label" parent="TimerCanvas"]
@@ -124,9 +303,31 @@ text = "Shop"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ShopMessage" type="Label" parent="ShopCanvas/Shop"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 155.0
+offset_bottom = 195.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.831373, 0, 0.188235, 1)
+theme_override_fonts/font = ExtResource("6_i6rg4")
+theme_override_font_sizes/font_size = 28
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="UpgradeOptions" type="VBoxContainer" parent="ShopCanvas/Shop"]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 200.0
 offset_right = 710.0
 offset_bottom = 600.0
+
+[connection signal="pressed" from="PauseCanvas/PauseButton" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="WeaponSlotsCanvas/WeaponSlotBG1/WeaponSlotUpgrade1" to="." method="_on_slot_upgrade_pressed" binds=[0]]
+[connection signal="pressed" from="WeaponSlotsCanvas/WeaponSlotBG2/WeaponSlotUpgrade2" to="." method="_on_slot_upgrade_pressed" binds=[1]]
+[connection signal="pressed" from="WeaponSlotsCanvas/WeaponSlotBG3/WeaponSlotUpgrade3" to="." method="_on_slot_upgrade_pressed" binds=[2]]
+[connection signal="pressed" from="WeaponSlotsCanvas/WeaponSlotBG4/WeaponSlotUpgrade4" to="." method="_on_slot_upgrade_pressed" binds=[3]]
+[connection signal="pressed" from="WeaponSlotsCanvas/WeaponSlotBG5/WeaponSlotUpgrade5" to="." method="_on_slot_upgrade_pressed" binds=[4]]
+[connection signal="pressed" from="WeaponSlotsCanvas/WeaponSlotBG6/WeaponSlotUpgrade6" to="." method="_on_slot_upgrade_pressed" binds=[5]]

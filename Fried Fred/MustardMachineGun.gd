@@ -28,13 +28,21 @@ var default_rotation: float = 0.0
 	#fire_rate = attributes["fire_rate"]
 
 func _ready():
-	#set_weapon_attributes()
+	gun_sprite.flip_v = false
+	apply_rarity_stats()
+
+func apply_rarity_stats():
 	var attributes = WeaponTypes.weapon_attributes[type][rarity]
 	damage = attributes["damage"]
 	fire_rate = attributes["fire_rate"]
 	range = attributes["range"]
 	circle_shape.radius = range
-	gun_sprite.flip_v = false
+	if rarity == WeaponTypes.WeaponRarity.RARE:
+		gun_sprite.modulate = Color(0.6, 0.8, 1.4)
+	elif rarity == WeaponTypes.WeaponRarity.EPIC:
+		gun_sprite.modulate = Color(1.3, 0.7, 1.4)
+	else:
+		gun_sprite.modulate = Color(1, 1, 1)
 
 func _physics_process(delta):
 	var enemies_in_range = get_overlapping_bodies()

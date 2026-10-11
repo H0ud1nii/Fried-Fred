@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://NuggetNuisance.gd" id="1_nn001"]
+[ext_resource type="Script" path="res://NuggetNuisanceBody.gd" id="2_nn002"]
+[ext_resource type="Texture2D" uid="uid://cr0mexwb0hc06" path="res://assets/Nugget Nuisance-Sheet.png" id="3_nn003"]
+
+[sub_resource type="Animation" id="Animation_nn004"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nn005"]
+_data = {
+"Walk": SubResource("Animation_nn004")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nn006"]
+radius = 14.0
+
+[node name="NuggetNuisance" type="CharacterBody2D" groups=["enemy", "nugget"]]
+collision_layer = 2
+collision_mask = 135
+script = ExtResource("1_nn001")
+
+[node name="NuggetNuisanceBody" type="Node2D" parent="."]
+script = ExtResource("2_nn002")
+
+[node name="Sprite2D" type="Sprite2D" parent="NuggetNuisanceBody"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_nn003")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NuggetNuisanceBody"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_nn005")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_nn006")

@@ -60,9 +60,14 @@ func movement():
 func take_damage(amount):
 	health -= amount
 	$AudioStreamPlayer.play()
+	hud.flash_damage()
 	if health <= 0:
 		die()
 	hud.update_hp_bar(health)  # Update the HP bar in the HUD
+
+func heal(percent):
+	health = min(health + 100 * percent, 100)
+	hud.update_hp_bar(health)
 
 func die():
 	player_died.emit()
@@ -109,9 +114,7 @@ func calculate_experiencecap():
 func get_random_item():
 	var dblist = []
 	for i in UpgradeDb.UPGRADES:
-		if i in collected_upgrades: #Find collected upgrades
-			pass
-		elif i in upgrade_options: #if the upgrade is already an option
+		if i in upgrade_options: #if the upgrade is already an option
 			pass
 		elif UpgradeDb.UPGRADES[i]["type"] == "item": #Skip Default item
 			pass
@@ -130,41 +133,25 @@ func get_random_item():
 	else:
 		return null 
 
-#func _input(event):
-	#if event.is_action_pressed("add-weapn-test"):  # Replace "ui_select" with the desired key action
-		#add_random_weapon()
-	#if event.is_action_pressed("rmv-weapn-test"):
-		#var random_slot = randi() % weapon_slots.size()
-		#remove_weapon(random_slot)
-#
-#func add_random_weapon():
-	## Randomly select a weapon scene path
-	#var random_weapon_scene_path = weapon_scene_paths[randi() % weapon_scene_paths.size()]
-	#add_weapon(random_weapon_scene_path)
-#
-#func add_weapon(weapon_scene_path):
-	#if available_slots > 0:
-		#for slot in weapon_slots:
-			#if slot.get_child_count() == 0:
-			##if not slot.has_children():
-				#var weapon_scene = load(weapon_scene_path)
-				#var weapon_instance = weapon_scene.instantiate()
-				#slot.add_child(weapon_instance)
-				#weapon_instance.position = Vector2.ZERO
-				#available_slots -= 1
-				#return true
-	#return false
-func add_weapon_to_slots(weapon_scene_path):
+func add_weapon_to_slots(weapon_scene_path, rarity="Common"):
+	var rarity_int = WeaponTypes.WeaponRarity.COMMON
+	if rarity == "Rare":
+		rarity_int = WeaponTypes.WeaponRarity.RARE
+	elif rarity == "Epic":
+		rarity_int = WeaponTypes.WeaponRarity.EPIC
+
 	if available_slots > 0:
 		var weapon_scene = load(weapon_scene_path)
 		var weapon_instance = weapon_scene.instantiate()
-		
+		weapon_instance.rarity = rarity_int  # Set weapon rarity for individual tracking
+
 		for slot in weapon_slots:
 			if slot.get_child_count() == 0:  # Check if the slot is empty
 				slot.add_child(weapon_instance)
 				weapon_instance.position = Vector2.ZERO
 				available_slots -= 1
-				print("Weapon added to slot")
+				print("Weapon added to slot with rarity:", rarity)
+				hud.update_weapon_slots()
 				return true
 	print("No available slots to add the weapon")
 	return false

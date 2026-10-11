@@ -1,25 +1,35 @@
 extends Node2D
 
-@export var max_enemies: int = 10
-var enemies_spawned: int = 0
+var wave = 1
 
-func spawn_mob():
-	var new_mob = preload("res://KetchupZombie.tscn").instantiate()
+var enemy_types = [
+	{"scene": preload("res://KetchupZombie.tscn"), "group": "zombie", "spawn_interval": 0.9, "base_max": 2, "wave_increment": 1, "max_count": 2, "time_since_spawn": 0.0},
+	{"scene": preload("res://NuggetNuisance.tscn"), "group": "nugget", "spawn_interval": 3.0, "base_max": 1, "wave_increment": 2, "max_count": 1, "time_since_spawn": 0.0},
+]
+
+func spawn_mob(enemy_scene):
+	var new_mob = enemy_scene.instantiate()
 	%PathFollow2D.progress_ratio = randf()
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
-	enemies_spawned += 1
-	new_mob.connect("ketchup_zombie_died", Callable(self, "_on_ketchup_zombie_died"))
 
-func _on_ketchup_zombie_died():
-	enemies_spawned -= 1
-	print("Zombies Alive:", enemies_spawned)
+func _process(delta):
+	for enemy_type in enemy_types:
+		enemy_type["time_since_spawn"] += delta
+		if enemy_type["time_since_spawn"] >= enemy_type["spawn_interval"]:
+			enemy_type["time_since_spawn"] = 0.0
+			var count = get_tree().get_nodes_in_group(enemy_type["group"]).size()
+			if count < enemy_type["max_count"]:
+				spawn_mob(enemy_type["scene"])
 
+func next_wave():
+	wave += 1
+	for enemy_type in enemy_types:
+		enemy_type["max_count"] = enemy_type["base_max"] + (wave - 1) * enemy_type["wave_increment"]
 
 func _on_spawn_timer_timeout():
-	if enemies_spawned < max_enemies:
-		spawn_mob()
-		
+	pass
+
 # Add the signals
 #signal enemy_spawned
 #signal zombie_died

@@ -6,7 +6,7 @@ func _ready():
 func _process(delta):
 	_update_time_label($WaveTimer.time_left)
 
-func _on_end_game_timer_timeout():
+func trigger_win():
 	%YouWon.visible = true
 	get_tree().paused = true
 
@@ -22,4 +22,15 @@ func _update_time_label(time_left):
 	$HUD.update_wave_timer(formatted_time)
 
 func _on_wave_timer_timeout():
-	$HUD.open_shop()
+	$HUD.start_wave_end()
+
+func _on_restart_pressed():
+	get_tree().paused = false
+	get_node("/root/Main").restart_game()
+
+func _on_main_menu_pressed():
+	get_tree().paused = false
+	get_node("/root/Main").go_to_main_menu()
+
+func _on_quit_pressed():
+	get_tree().quit()

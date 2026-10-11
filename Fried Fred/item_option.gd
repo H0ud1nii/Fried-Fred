@@ -31,7 +31,7 @@ func _ready():
 	
 
 func _input(event):
-	if event.is_action("click"):
+	if event.is_action_pressed("click"):
 		if mouse_over:
 			emit_signal("selected_upgrade", item)
 			print("selected ", item)

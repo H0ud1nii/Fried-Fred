@@ -32,7 +32,7 @@ radius = 15.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2jw"]
 size = Vector2(25, 60)
 
-[node name="KetchupZombie" type="CharacterBody2D" groups=["enemy"]]
+[node name="KetchupZombie" type="CharacterBody2D" groups=["enemy", "zombie"]]
 collision_layer = 2
 collision_mask = 135
 script = ExtResource("1_kkpn1")

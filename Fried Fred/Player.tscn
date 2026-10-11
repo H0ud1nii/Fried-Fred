@@ -55,6 +55,7 @@ format = 1
 radius = 80.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ufcjc"]
+radius = 32.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8j6ja"]
 size = Vector2(24, 76)
